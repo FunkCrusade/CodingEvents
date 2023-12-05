@@ -1,0 +1,55 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using CodeEvents.Models
+@model List<Event>
+
+<h1>
+    Coding Events
+</h1>
+
+<p>
+    <a asp-controller="Events" asp-action="Add">Add Event</a>       @* creates link to add events to /events *@
+</p>
+<p>
+<a asp-controller="Events" asp-action="Delete">Delete Event</a>       @* creates link to delete /events*@
+</p>
+
+@if (Model.Count == 0)
+{
+    <p>No events yet!</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                ContactEmail
+            </th>
+            <th>
+            EventLocation
+            </th>
+        </tr>
+        @foreach (var evt in Model)
+        {
+            <tr>
+                <td>@evt.Id</td>
+                <td>@evt.Name</td>
+                <td>@evt.Description</td>
+                <td>@evt.ContactEmail</td>
+                <td>@evt.EventLocation</td>
+            </tr>
+        }
+    </table>
+}
