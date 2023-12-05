@@ -9,23 +9,20 @@ namespace CodeEvents.Models
 		public string? EventLocation { get; set; }
 
 		public int Id { get; set; }
-		static private int nextId = 1;
 
 		public Event()
 		{
-			Id = nextId;
-			nextId++;
 		}
 
-		public Event(string name, string description)
+		public Event(string name, string description, string contactEmail, string eventLocationl)
 		{
 			Name = name;
 			Description = description;
-			Id = nextId;
-			nextId++;
+			ContactEmail = contactEmail;
+			EventLocation = EventLocation;
 		}
 
-        public override string ToString()
+        public override string? ToString()
         {
             return Name;
         }

@@ -13,10 +13,16 @@ namespace CodeEvents.Controllers
 {
     public class EventsController : Controller
     {
+        private EventDbContext context;
+
+        public EventsController (EventDbContext dbcontext)
+        {
+            context = dbcontext;
+        }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            List <Event> events = new List<Event>(EventData.GetAll());
+            List <Event> events = context.Events.ToList();
 
             return View(events);
         }
@@ -41,7 +47,9 @@ namespace CodeEvents.Controllers
                     ContactEmail = addEventViewModel.ContactEmail,
                     EventLocation = addEventViewModel.EventLocation
                 };
-                EventData.Add(newEvent);
+
+                context.Events.Add(newEvent);
+                context.SaveChanges();
 
                 return Redirect("/Events");
             }
@@ -50,7 +58,8 @@ namespace CodeEvents.Controllers
 
         public IActionResult Delete()
         {
-            ViewBag.events = EventData.GetAll();
+            ViewBag.events = context.Events.ToList();
+
             return View();
         }
 
@@ -59,8 +68,11 @@ namespace CodeEvents.Controllers
         {
             foreach (int eventId in eventIds)
             {
-                EventData.Remove(eventId);
+                Event? theEvent = context.Events.Find(eventId);
+                context.Events.Remove(theEvent);
             }
+
+            context.SaveChanges();
                 return Redirect("/Events");
         }
     }
